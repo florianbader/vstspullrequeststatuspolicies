@@ -1,0 +1,103 @@
+.toggle-pill-container {
+  display: inline-flex;
+  position: relative;
+}
+
+button.toggle-pill {
+  border: 1px solid #c8c8c8;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.toggle-pill {
+  position: relative;
+  font-size: 20px;
+  box-sizing: border-box;
+  width: 2.2em;
+  height: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-top: 0px;
+  padding-right: 0.2em;
+  padding-bottom: 0px;
+  padding-left: 0.2em;
+  outline: transparent;
+  border-radius: 1em;
+  transition: all 0.1s ease;
+  border-width: 1px;
+  border-style: solid;
+  background: rgb(255, 255, 255);
+  border-color: rgb(102, 102, 102);
+}
+
+.toggle-pill.is-checked {
+  position: relative;
+  font-size: 20px;
+  box-sizing: border-box;
+  width: 2.2em;
+  height: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-top: 0px;
+  padding-right: 0.2em;
+  padding-bottom: 0px;
+  padding-left: 0.2em;
+  justify-content: flex-end;
+  outline: transparent;
+  border-radius: 1em;
+  transition: all 0.1s ease;
+  border-width: 1px;
+  border-style: solid;
+  background: rgb(0, 120, 212);
+  border-color: transparent;
+}
+
+.toggle-pill-container label {
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  margin-left: 10px;
+  user-select: none;
+  color: rgb(51, 51, 51);
+  box-sizing: border-box;
+  box-shadow: none;
+  display: block;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.toggle-pill {
+  border: 1px solid #c8c8c8;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.toggle-pill > div {
+  width: 0.5em;
+  height: 0.5em;
+  background-color: rgb(33, 33, 33);
+  box-sizing: border-box;
+  border-radius: 0.5em;
+  transition: all 0.1s ease;
+  border-color: transparent;
+  border-width: 0.28em;
+  border-style: solid;
+}
+
+.toggle-pill.is-checked > div {
+  width: 0.5em;
+  height: 0.5em;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  border-radius: 0.5em;
+  transition: all 0.1s ease;
+  border-color: transparent;
+  border-width: 0.28em;
+  border-style: solid;
+}

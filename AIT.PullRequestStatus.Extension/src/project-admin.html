@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Project admin</title>
+  <base target="_blank" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="scripts.bundle.js"></script>
+</head>
+
+<body>
+  <app-project-admin></app-project-admin>
+
+  <script type="text/javascript">
+    VSS.init({
+      explicitNotifyLoaded: true,
+      usePlatformScripts: true,
+      usePlatformStyles: true,
+      moduleLoaderConfig: {}
+    });
+
+    window.ngModule = "project";
+
+    VSS.require([
+      "inline.bundle.js", "polyfills.bundle.js",
+      "styles.bundle.js", "vendor.bundle.js"
+    ], function () {
+      VSS.require(["main.bundle.js"], function () {
+        VSS.notifyLoadSucceeded();
+      });
+    });
+  </script>
+</body>
+
+</html>

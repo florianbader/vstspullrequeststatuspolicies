@@ -1,0 +1,45 @@
+<div class="title-container">
+  <div class="title">Pull request status policies settings</div>
+  <div class="buttons">
+    <button (click)="save()">
+      <span class="bowtie-icon bowtie-save"></span>
+      Save
+    </button>
+  </div>
+</div>
+
+<div class="hub-progress pageProgressIndicator" *ngIf="isBusy"></div>
+
+<div class="container">
+  <div class="message is-warning" *ngIf="!collectionStatus?.isActivated || false">
+    The extension is not activated. Please enter a valid personal access token.
+  </div>
+</div>
+
+<div class="container">
+  <div class="settings-group">
+    <label class="text-field-label">
+      <span>Personal access token</span>
+      <span class="bowtie-icon bowtie-status-info-outline dtc-info-button-icon undefined" #patElement></span>
+    </label>
+    <div id="pat-tippy-template" #patTooltipElement>
+      <h4>Why do we need a personal access token?</h4>
+      <span>In order to send status updates to pull requests, create service hooks and access additional api (e.g. code) the service
+        needs a personal access token with which all those apis are accessed. The personal access token is stored securely
+        and encrypted and once saved it is only used in the backend service. If you want to restrict the access, the minimum
+        scopes needed are the following:</span>
+      <ul style="width: 200px">
+        <li>Notifications (manage)
+          <span class="bowtie-icon bowtie-status-info-outline dtc-info-button-icon undefined tooltip" title="This is used to create, update and delete service hooks."></span>
+        </li>
+        <li>Code (read and write)
+          <span class="bowtie-icon bowtie-status-info-outline dtc-info-button-icon undefined tooltip" title="This is used to write pull request status updates and read code for status policies."></span>
+        </li>
+      </ul>
+      <a href="{{settings.baseUrl}}_details/security/tokens">Create a personal access token</a>
+    </div>
+    <div class="text-field-container">
+      <input type="password" class="text-field" name="personalAccessToken" [(ngModel)]="settings.personalAccessToken" />
+    </div>
+  </div>
+</div>

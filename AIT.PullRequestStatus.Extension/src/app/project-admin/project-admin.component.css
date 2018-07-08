@@ -1,0 +1,45 @@
+.left-pane-repositories {
+  padding-top: 10px;
+}
+
+.left-pane-title {
+  font-size: 16px;
+  color: #666;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.left-pane {
+  position: relative;
+  top: 10px;
+  height: calc((100%) - 10px);
+  overflow: auto;
+}
+
+.tree-node-img.icon {
+  margin-left: 15px !important;
+}
+
+.right-hub-cont {
+  margin-left: 20px;
+}
+
+.title {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-family: "Segoe UI VSS (Regular)", "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Helvetica, Ubuntu, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 200;
+  font-size: 18px;
+  color: #212121;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.hub-progress {
+  left: 20px;
+  top: 40px;
+}

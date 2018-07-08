@@ -1,0 +1,10 @@
+<div class="wait-container" #waitContainerElement>
+  <div class="option-group" *ngFor="let statusPolicy of statusPolicies">
+    <h3>{{ statusPolicy.name }}</h3>
+    <label>{{ statusPolicy.description }}</label>
+    <div>
+      <app-toggle-button [isChecked]="statusPolicy.isActivated" (isCheckedChange)="statusPolicyChanged(statusPolicy.id, $event)"
+        [disabled]="statusPolicyDisabled[statusPolicy.id]"></app-toggle-button>
+    </div>
+  </div>
+</div>

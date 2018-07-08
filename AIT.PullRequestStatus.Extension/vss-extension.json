@@ -1,0 +1,77 @@
+{
+  "manifestVersion": 1,
+  "id": "aitstatuspolicies",
+  "version": "0.1.21",
+  "name": "AIT Pull Request Status Policies",
+  "scopes": ["vso.profile", "vso.code"],
+  "description": "Adds git pull request status policies which can be toggled for each repository.",
+  "publisher": "florianbader",
+  "icons": {
+    "default": "static/images/logo.png"
+  },
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "demands": ["api-version/3.0"],
+  "tags": ["pull request", "status policy", "status policies", "git", "code"],
+  "screenshots": [
+    {
+      "path": "static/images/project-admin.png"
+    },
+    {
+      "path": "static/images/pull-request.png"
+    },
+    {
+      "path": "static/images/branch-policy.png"
+    }
+  ],
+  "content": {
+    "license": {
+      "path": "license.md"
+    },
+    "details": {
+      "path": "overview.md"
+    }
+  },
+  "links": {
+    "support": {
+      "uri": "http://www.aitgmbh.de/en/about-us.html"
+    },
+    "privacypolicy": {
+      "uri": "https://www.aitgmbh.de/datenschutz"
+    }
+  },
+  "files": [
+    {
+      "path": "dist",
+      "addressable": true
+    }
+  ],
+  "categories": ["Code"],
+  "contributions": [
+    {
+      "id": "ait-status-policies-project-admin-hub",
+      "type": "ms.vss-web.hub",
+      "description": "PR Status Policies",
+      "targets": ["ms.vss-web.project-admin-hub-group"],
+      "properties": {
+        "name": "PR Status Policies",
+        "order": 100,
+        "uri": "dist/project-admin.html"
+      }
+    },
+    {
+      "id": "ait-status-policies-collection-admin-hub",
+      "type": "ms.vss-web.hub",
+      "description": "PR Status Policies",
+      "targets": ["ms.vss-web.collection-admin-hub-group"],
+      "properties": {
+        "name": "PR Status Policies",
+        "order": 100,
+        "uri": "dist/collection-admin.html"
+      }
+    }
+  ]
+}

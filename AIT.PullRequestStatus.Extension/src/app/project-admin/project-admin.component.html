@@ -1,0 +1,62 @@
+<div class="hub-view explorer">
+  <div class="hub-content">
+    <div class="splitter horizontal hub-splitter stateful toggle-button-enabled">
+      <div class="leftPane">
+        <div class="left-hub-content">
+          <div class="left-pane">
+            <div class="left-pane-title">Repositories</div>
+            <div class="left-pane-repositories">
+              <div class="tree-view bowtie-tree">
+                <ul class="tree-children">
+                  <li class="node folder repository-node" [class.selected]="selectedRepository == repository" *ngFor="let repository of repositories">
+                    <a class="node-link" (click)="selectedRepository = repository">
+                      <div class="node-content">
+                        <span class="icon tree-node-img bowtie-icon bowtie-git"></span>
+                        {{ repository.name }}
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="toggle-button" title="Collapse splitter" aria-expanded="true" style="left: 232px;">
+        <span class="bowtie-icon bowtie-chevron-left"></span>
+      </button>
+
+      <div class="handleBar" style="left: 250px;">
+        <div class="handleBar-hitTarget"></div>
+      </div>
+
+      <div class="rightPane">
+        <div class="right-hub-cont">
+          <div *ngIf="selectedRepository == null">
+            <div class="title">Status Policies</div>
+
+            <div class="hub-progress pageProgressIndicator page-global-progress-indicator" *ngIf="isBusy"></div>
+          </div>
+          <div *ngIf="selectedRepository != null">
+            <div class="title">Status Policies for {{ selectedRepository?.name }} repository</div>
+
+            <div class="hub-progress pageProgressIndicator page-global-progress-indicator" *ngIf="isBusy"></div>
+
+            <div class="message is-warning" *ngIf="!collectionStatus?.isActivated || false">
+              The extension is not activated. Please enter a valid personal access token. Click
+              <a href="{{collectionHubUrl}}">here</a> to activate the extension.
+            </div>
+
+            <div class="message is-warning" *ngIf="projectStatus?.hasBrokenServiceHooks || false">
+              The service hooks for the current team project seem to be broken. Please click
+              <a (click)="reactivateProject()">here</a> to refresh them.
+            </div>
+
+            <app-repository-status-policies [repositoryId]="selectedRepository?.id" (isBusyChanged)="this.isBusy = $event"></app-repository-status-policies>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

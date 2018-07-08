@@ -1,0 +1,15 @@
+@import "../node_modules/tippy.js/dist/tippy.css";
+@import "../node_modules/tippy.js/dist/themes/light.css";
+
+.message {
+  padding: 3px;
+  color: #212121;
+}
+
+.message.is-warning {
+  background-color: #fff4ce;
+}
+
+.message.is-error {
+  background-color: #f9ebeb;
+}
