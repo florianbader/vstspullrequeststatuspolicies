@@ -32,3 +32,7 @@ declare class CollectionStatus {
 declare class ProjectStatus {
   hasBrokenServiceHooks: boolean;
 }
+
+declare class ExtensionConfiguration {
+  serverUrl: string;
+}

@@ -1,69 +1,104 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
 
 @Injectable()
 export class ConfigurationService {
-  private apiUrl = environment.apiBaseUrl + "api/v1/configuration/";
+  private configurationDocumentId = 1;
 
-  constructor(private httpClient: HttpClient) {}
+  private webContext: WebContext;
+  private apiUrl = "/api/v1/configuration/";
 
-  public activateCollection(settings: AccountConfiguration): Promise<void> {
-    return this.httpClient
-      .post(`${this.apiUrl}${settings.collectionId}`, settings)
-      .toPromise()
-      .then(_ => {});
+  constructor(private httpClient: HttpClient) {
+    this.webContext = VSS.getWebContext();
   }
 
-  public activateStatusPolicy(
+  public async activateCollection(settings: AccountConfiguration): Promise<void> {
+    const extensionConfiguration = await this.getExtensionConfiguration();
+
+    return this.httpClient
+      .post(`${extensionConfiguration.serverUrl}${this.apiUrl}${settings.collectionId}`, settings)
+      .toPromise()
+      .then(_ => { });
+  }
+
+  public async activateStatusPolicy(
     collectionId: string,
     projectId: string,
     repositoryId: string,
     statusPolicyName: string
   ): Promise<void> {
+    const extensionConfiguration = await this.getExtensionConfiguration();
+
     return this.httpClient
-      .post(`${this.apiUrl}${collectionId}/${projectId}/${repositoryId}/${statusPolicyName}`, {})
+      .post(`${extensionConfiguration.serverUrl}${this.apiUrl}${collectionId}/${projectId}/${repositoryId}/${statusPolicyName}`, {})
       .toPromise()
-      .then(_ => {});
+      .then(_ => { });
   }
 
-  public deactivateStatusPolicy(
+  public async deactivateStatusPolicy(
     collectionId: string,
     projectId: string,
     repositoryId: string,
     statusPolicyName: string
   ): Promise<void> {
+    const extensionConfiguration = await this.getExtensionConfiguration();
+
     return this.httpClient
-      .delete(`${this.apiUrl}${collectionId}/${projectId}/${repositoryId}/${statusPolicyName}`)
+      .delete(`${extensionConfiguration.serverUrl}${this.apiUrl}${collectionId}/${projectId}/${repositoryId}/${statusPolicyName}`)
       .toPromise()
-      .then(_ => {});
+      .then(_ => { });
   }
 
-  public reactivateProject(collectionId: string, projectId: string): Promise<void> {
+  public async reactivateProject(collectionId: string, projectId: string): Promise<void> {
+    const extensionConfiguration = await this.getExtensionConfiguration();
+
     return this.httpClient
-      .post(`${this.apiUrl}${collectionId}/${projectId}`, {})
+      .post(`${extensionConfiguration.serverUrl}${this.apiUrl}${collectionId}/${projectId}`, {})
       .toPromise()
-      .then(_ => {});
+      .then(_ => { });
   }
 
-  public getRepositoryStatus(collectionId: string, projectId: string, repositoryId: string): Promise<RepositoryStatus> {
+  public async getRepositoryStatus(collectionId: string, projectId: string, repositoryId: string): Promise<RepositoryStatus> {
+    const extensionConfiguration = await this.getExtensionConfiguration();
+
     return this.httpClient
-      .get(`${this.apiUrl}${collectionId}/${projectId}/${repositoryId}`)
+      .get(`${extensionConfiguration.serverUrl}${this.apiUrl}${collectionId}/${projectId}/${repositoryId}`)
       .toPromise()
       .then(s => s as RepositoryStatus);
   }
 
-  public getProjectStatus(collectionId: string, projectId: string): Promise<ProjectStatus> {
+  public async getProjectStatus(collectionId: string, projectId: string): Promise<ProjectStatus> {
+    const extensionConfiguration = await this.getExtensionConfiguration();
+
     return this.httpClient
-      .get(`${this.apiUrl}${collectionId}/${projectId}`)
+      .get(`${extensionConfiguration.serverUrl}${this.apiUrl}${collectionId}/${projectId}`)
       .toPromise()
       .then(s => s as ProjectStatus);
   }
 
-  public getCollectionStatus(collectionId: string): Promise<CollectionStatus> {
+  public async getCollectionStatus(collectionId: string): Promise<CollectionStatus> {
+    const extensionConfiguration = await this.getExtensionConfiguration();
+
     return this.httpClient
-      .get(`${this.apiUrl}${collectionId}`)
+      .get(`${extensionConfiguration.serverUrl}${this.apiUrl}${collectionId}`)
       .toPromise()
       .then(s => s as CollectionStatus);
+  }
+
+  public async updateExtensionConfiguration(configuration: ExtensionConfiguration) {
+    const service = await this.getExtensionService();
+    await service.setDocument(this.webContext.collection.name, {
+      id: this.configurationDocumentId,
+      ...configuration
+    });
+  }
+
+  public async getExtensionConfiguration() {
+    const service = await this.getExtensionService();
+    return await service.getDocument(this.webContext.collection.name, this.configurationDocumentId.toString()) as ExtensionConfiguration;
+  }
+
+  private async getExtensionService(): Promise<IExtensionDataService> {
+    return await VSS.getService(VSS.ServiceIds.ExtensionData) as IExtensionDataService;
   }
 }

@@ -16,7 +16,20 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container">  
+  <div class="settings-group">
+      <label class="text-field-label">
+        <span>Pull request status policies server url</span>
+        <span class="bowtie-icon bowtie-status-info-outline dtc-info-button-icon undefined" #urlElement></span>
+      </label>
+      <div id="url-tippy-template" #urlTooltipElement>
+        <span>This extension needs a backend server to do the heavy lifting. You can run the backend on your own servers or host it in Azure. Find the source code <a href="https://github.com/AITGmbH/vstspullrequeststatuspolicies">here</a>.</span>
+      </div>
+      <div class="text-field-container">
+        <input type="text" class="text-field" name="serverUrl" [(ngModel)]="extensionConfiguration.serverUrl" />
+      </div>
+    </div>
+
   <div class="settings-group">
     <label class="text-field-label">
       <span>Personal access token</span>

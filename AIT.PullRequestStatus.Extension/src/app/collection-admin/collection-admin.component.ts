@@ -11,17 +11,46 @@ export class CollectionAdminComponent implements OnInit {
 
   public collectionStatus: CollectionStatus;
   public settings = {} as AccountConfiguration;
+  public extensionConfiguration = {} as ExtensionConfiguration;
   public isBusy = false;
 
   @ViewChild("patElement") public patElement: ElementRef;
   @ViewChild("patTooltipElement") public patTooltipElement: ElementRef;
 
-  constructor(private configurationService: ConfigurationService) {}
+  @ViewChild("urlElement") public urlElement: ElementRef;
+  @ViewChild("urlTooltipElement") public urlTooltipElement: ElementRef;
+
+  constructor(private configurationService: ConfigurationService) { }
 
   public ngOnInit() {
     this.webContext = VSS.getWebContext();
 
-    (window as any).tippy(this.patElement.nativeElement, {
+    this.createTooltip(this.patElement.nativeElement, this.patTooltipElement.nativeElement);
+    this.createTooltip(this.urlElement.nativeElement, this.urlTooltipElement.nativeElement);
+
+    (window as any).tippy(".tooltip", {
+      theme: "light",
+      arrow: true,
+      size: "small"
+    });
+
+    this.init();
+  }
+
+  public async save() {
+    this.isBusy = true;
+
+    try {
+      await this.configurationService.updateExtensionConfiguration(this.extensionConfiguration);
+      await this.configurationService.activateCollection(this.settings);
+      this.collectionStatus = await this.configurationService.getCollectionStatus(this.webContext.collection.id);
+    } finally {
+      this.isBusy = false;
+    }
+  }
+
+  private createTooltip(element, tooltipElement) {
+    (window as any).tippy(element, {
       trigger: "click",
       theme: "light",
       performance: true,
@@ -29,7 +58,7 @@ export class CollectionAdminComponent implements OnInit {
       offset: "0,180",
       interactive: true,
       arrow: true,
-      html: this.patTooltipElement.nativeElement,
+      html: tooltipElement,
       onShow(instance) {
         setTimeout(() => {
           instance.popper.style.top = "180px";
@@ -42,25 +71,6 @@ export class CollectionAdminComponent implements OnInit {
         }, 200);
       }
     });
-
-    (window as any).tippy(".tooltip", {
-      theme: "light",
-      arrow: true,
-      size: "small"
-    });
-
-    this.init();
-  }
-
-  public save() {
-    this.isBusy = true;
-    this.configurationService
-      .activateCollection(this.settings)
-      .then(
-        async () =>
-          (this.collectionStatus = await this.configurationService.getCollectionStatus(this.webContext.collection.id))
-      )
-      .finally(() => (this.isBusy = false));
   }
 
   private async init() {
@@ -69,6 +79,8 @@ export class CollectionAdminComponent implements OnInit {
       baseUrl: this.webContext.host.uri,
       collectionId: this.webContext.collection.id
     };
+
+    this.extensionConfiguration = await this.configurationService.getExtensionConfiguration();
 
     this.collectionStatus = await this.configurationService.getCollectionStatus(this.webContext.collection.id);
   }

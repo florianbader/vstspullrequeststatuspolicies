@@ -1,5 +1,7 @@
 # AIT Pull Request Status Policies
 
+**This extension needs a self-hosted server to run. You can find the source code and introductions on how to run it on [GitHub](https://github.com/AITGmbH/vstspullrequeststatuspolicies).**
+
 Adds git pull request status policies which can be toggled for each repository. Currently the following status policies are available:
 
 * Work in progress  
